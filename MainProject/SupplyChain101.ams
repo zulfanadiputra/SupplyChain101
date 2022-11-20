@@ -1,0 +1,213 @@
+## ams_version=1.0
+
+Model Main_SupplyChain101 {
+	Procedure ReadFromExcel {
+		Body: {
+			axll::CloseAllWorkBooks;
+			axll::OpenWorkBook("data\\data.xlsx");
+			
+			axll::SelectSheet(SheetName: "Supply");
+			axll::ReadSet(
+				SetReference			: S_Plants,
+				SetRange			: "A2:A100",
+				ExtendSuperSets			: 1,
+				MergeWithExistingElements	: 0,
+				SkipEmptyCells			: 0);
+			axll::ReadList(
+				IdentifierReference 	: P_Supply,
+				RowHeaderRange 		: "A2:A100",
+				DataRange		: "B2:B100",
+				ModeForUnknownElements	: 0,
+				MergeWithExistingData	: 0);
+			
+			axll::SelectSheet(SheetName: "Demand");
+			axll::ReadSet(
+				SetReference			: S_Markets,
+				SetRange			: "A2:A100",
+				ExtendSuperSets			: 1,
+				MergeWithExistingElements	: 0,
+				SkipEmptyCells			: 0);
+			axll::ReadList(
+				IdentifierReference 	: P_Demand,
+				RowHeaderRange 		: "A2:A100",
+				DataRange		: "B2:B100",
+				ModeForUnknownElements	: 0,
+				MergeWithExistingData	: 0);
+			
+			axll::SelectSheet(SheetName: "Distance");
+			axll::ReadTable(
+				IdentifierReference	: P_Distance,
+				RowHeaderRange		: "A2:A100",
+				ColumnHeaderRange	: "B1:AG1",
+				DataRange		: "B2:AG100",
+				ModeForUnknownElements	: 0,
+				MergeWithExistingData	: 0);
+			
+			axll::SelectSheet(SheetName: "LatLong");
+			axll::ReadList(
+				IdentifierReference 	: P_Latitude,
+				RowHeaderRange 		: "A2:A100",
+				DataRange		: "C2:C100",
+				ModeForUnknownElements	: 0,
+				MergeWithExistingData	: 0);
+			
+			axll::ReadList(
+				IdentifierReference 	: P_Longitude,
+				RowHeaderRange 		: "A2:A100",
+				DataRange		: "B2:B100",
+				ModeForUnknownElements	: 0,
+				MergeWithExistingData	: 0);
+			
+			
+			axll::CloseAllWorkBooks();
+		}
+	}
+	Procedure SolveDirect {
+		Body: {
+			empty V_SoldGoods, V_Profit;
+			solve Minimum_Total_Cost_Direct;
+			
+			! store results
+			P_SoldGoods_Direct(p,m) := V_SoldGoods(p,m);
+			P_Profit_Direct := V_Profit;
+		}
+	}
+	Section Direct_Plant_Market {
+		DeclarationSection Store_Results {
+			Parameter P_SoldGoods_Direct {
+				IndexDomain: (p,m);
+			}
+			Parameter P_Profit_Direct;
+		}
+		Variable V_SoldGoods {
+			IndexDomain: (p,m) | P_Pair_Plant_Market(p,m);
+			Range: integer;
+		}
+		Variable V_Profit {
+			Range: free;
+			Definition: {
+				sum((p,m),V_SoldGoods(p,m)*P_Distance(p,m)*P_CostPerKM);
+			}
+		}
+		Constraint C_Plant_Limit {
+			IndexDomain: p;
+			Definition: {
+				sum(m, V_SoldGoods(p,m)) <= P_Supply(p);
+			}
+		}
+		Constraint C_Market_Demand {
+			IndexDomain: m;
+			Definition: {
+				sum(p, V_SoldGoods(p,m)) >= P_Demand(m);
+			}
+		}
+	}
+	Section BasicExample {
+		Set S_Direct_Constraints {
+			SubsetOf: AllConstraints;
+			Definition: {
+				AllConstraints*Direct_Plant_Market;
+			}
+		}
+		Set S_Direct_Variables {
+			SubsetOf: AllVariables;
+			Definition: {
+				AllVariables*Direct_Plant_Market;
+			}
+		}
+		Set S_Locations {
+			Index: l;
+		}
+		Set S_Plants {
+			SubsetOf: S_Locations;
+			Index: p;
+		}
+		Set S_Markets {
+			SubsetOf: S_Locations;
+			Index: m;
+		}
+		Parameter P_Pair_Plant_Market {
+			IndexDomain: (p,m);
+			Range: binary;
+		}
+		Parameter P_Supply {
+			IndexDomain: p;
+		}
+		Parameter P_Demand {
+			IndexDomain: m;
+		}
+		Parameter P_Distance {
+			IndexDomain: (p,m);
+		}
+		Parameter P_CostPerKM {
+			Definition: 0.1;
+		}
+		Parameter P_Latitude {
+			IndexDomain: l;
+		}
+		Parameter P_Longitude {
+			IndexDomain: l;
+		}
+		MathematicalProgram Minimum_Total_Cost_Direct {
+			Objective: V_Profit;
+			Direction: minimize;
+			Constraints: S_Direct_Constraints;
+			Variables: S_Direct_Variables;
+			Type: Automatic;
+		}
+	}
+	Section WebUI_stuffs {
+		StringParameter pr_SecondaryActionSpec {
+			IndexDomain: (webui::indexPageExtension,webui::indexPageActionSpec);
+			Definition: data { ( 1, displaytext ) : "Solve",  ( 1, icon ) : "aimms",  ( 1, procedure ) : "SolveDirect",  ( 1, state ) : "Active" };
+		}
+	}
+	Procedure MainInitialization {
+		Comment: "Add initialization statements here that do NOT require any library being initialized already.";
+	}
+	Procedure PostMainInitialization {
+		Comment: {
+			"Add initialization statements here that require that the libraries are already initialized properly,
+			or add statements that require the Data Management module to be initialized."
+		}
+	}
+	Procedure MainExecution;
+	Procedure PreMainTermination {
+		Body: {
+			return DataManagementExit();
+		}
+		Comment: {
+			"Add termination statements here that require all libraries to be still alive.
+			Return 1 if you allow the termination sequence to continue.
+			Return 0 if you want to cancel the termination sequence."
+		}
+	}
+	Procedure MainTermination {
+		Body: {
+			return 1;
+		}
+		Comment: {
+			"Add termination statements here that do not require all libraries to be still alive.
+			Return 1 to allow the termination sequence to continue.
+			Return 0 if you want to cancel the termination sequence.
+			It is recommended to only use the procedure PreMainTermination to cancel the termination sequence and let this procedure always return 1."
+		}
+	}
+	Section Quantities_and_Units {
+		Comment: {
+			"This section contains all the units and quantities that are added automatically by AIMMS.
+			It is recommended to declare all your quantities here."
+		}
+		Quantity SI_Time_Duration {
+			BaseUnit: s;
+			Conversions: minute->s : #-># * 60;
+			Comment: {
+				"Expresses the value for the duration of periods.
+				
+				The unit s has been added automatically because it is a required unit for AimmsWebUI.
+				
+				The unit minute has been added automatically because it is a required unit for AimmsWebUI."
+			}
+		}
+	}
+}

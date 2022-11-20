@@ -1,0 +1,352 @@
+{
+  "version": "4.67.0",
+  "application": {
+    "aimms.widget.type": {
+      "literal": "application"
+    },
+    "browsername": {
+      "aimms": {
+        "contents": [
+          "webui::ClientBrowserName"
+        ]
+      }
+    },
+    "browsertimezone": {
+      "aimms": {
+        "contents": [
+          "webui::BrowserTimeZone"
+        ]
+      }
+    },
+    "ignoredst": {
+      "aimms": {
+        "contents": [
+          "webui::IgnoreDST"
+        ]
+      }
+    },
+    "theme.classic": {
+      "literal": "NOT_ALLOWED"
+    },
+    "timezone": {
+      "aimms": {
+        "contents": [
+          "webui::DisplayTimeZone"
+        ]
+      }
+    },
+    "timezone.dst.readonly": {
+      "aimms": {
+        "contents": [
+          "webui::DefaultDSTSettingForDisplayTimeZone"
+        ]
+      }
+    }
+  },
+  "layouts/custom_b82c9cd6-4921-49aa-aae3-23e8f6be9c40": {
+    "definition": {
+      "literal": {
+        "componentName": "Grid",
+        "props": {
+          "gridTemplateColumns": "1fr 1fr",
+          "gridTemplateRows": "1fr 1fr",
+          "gridTemplateAreas": "\"area-a area-b\" \"area-c area-c\""
+        },
+        "items": [
+          {
+            "componentName": "WidgetArea",
+            "props": {
+              "gridArea": "area-a",
+              "name": "Area A",
+              "gridAutoFlow": "column"
+            }
+          },
+          {
+            "componentName": "WidgetArea",
+            "props": {
+              "gridArea": "area-b",
+              "name": "Area B",
+              "gridAutoFlow": "column"
+            }
+          },
+          {
+            "componentName": "WidgetArea",
+            "props": {
+              "gridArea": "area-c",
+              "name": "Area C",
+              "gridAutoFlow": "row"
+            }
+          }
+        ]
+      }
+    },
+    "displayName": {
+      "literal": "Layout2 Copy"
+    }
+  },
+  "pages/home": {
+    "aimms.widget.type": {
+      "literal": "pagev2-grid"
+    },
+    "bindings": {
+      "literal": [
+        {
+          "widgetUri": "Connections",
+          "gridArea": "area-a",
+          "dndId": "area-bConnections1"
+        },
+        {
+          "widgetUri": "map",
+          "gridArea": "area-c",
+          "dndId": "area-cmap0"
+        },
+        {
+          "widgetUri": "map_1",
+          "gridArea": "Unassigned widgets",
+          "dndId": "Unassigned widgetsmap_12"
+        }
+      ]
+    },
+    "layoutId": {
+      "literal": "custom_b82c9cd6-4921-49aa-aae3-23e8f6be9c40"
+    },
+    "secondarypageactions": {
+      "aimms": {
+        "contents": [
+          "pr_SecondaryActionSpec"
+        ],
+        "slices": [
+          {
+            "identifier": "pr_SecondaryActionSpec",
+            "slice": [
+              {
+                "index": "webui::indexPageExtension",
+                "type": "free",
+                "value": "webui::indexPageExtension"
+              },
+              {
+                "index": "webui::indexPageActionSpec",
+                "type": "free",
+                "value": "webui::indexPageActionSpec"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "widgets": {
+      "literal": [
+        {
+          "uri": "map",
+          "layoutInfo": {}
+        },
+        {
+          "uri": "map_1",
+          "layoutInfo": {}
+        },
+        {
+          "uri": "Connections",
+          "layoutInfo": {}
+        }
+      ]
+    }
+  },
+  "widgets/Connections": {
+    "aimms.widget.type": {
+      "literal": "table"
+    },
+    "contents": {
+      "aimms": {
+        "contents": [
+          "P_Pair_Plant_Market"
+        ]
+      }
+    },
+    "contents.partition": {
+      "literal": {
+        "rowHeader": [
+          "p"
+        ],
+        "colHeader": [
+          "m"
+        ],
+        "aggregated": [
+          "<IDENTIFIER-SET>"
+        ]
+      }
+    },
+    "custom.column.widths": {
+      "literal": [
+        {
+          "type": "rowHeader",
+          "colKey": "p",
+          "width": 24.04
+        }
+      ]
+    },
+    "default.column.width": {
+      "literal": 15
+    },
+    "name": {
+      "literal": "Connections"
+    },
+    "title": {
+      "literal": "Allowable Connections"
+    }
+  },
+  "widgets/map": {
+    "aimms.widget.type": {
+      "literal": "map-v2"
+    },
+    "arcs.__display_order__": {
+      "literal": [
+        "arcs.0"
+      ]
+    },
+    "arcs.0": {
+      "aimms": {
+        "contents": [
+          "P_SoldGoods_Direct"
+        ],
+        "slices": [
+          {
+            "identifier": "P_SoldGoods_Direct",
+            "slice": [
+              {
+                "index": "p",
+                "type": "free",
+                "value": "p"
+              },
+              {
+                "index": "m",
+                "type": "free",
+                "value": "m"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "arcs.0.label.hide": {
+      "literal": false
+    },
+    "arcs.0.line.straight": {
+      "literal": false
+    },
+    "arcs.0.numdecimals": {
+      "literal": 0
+    },
+    "arcs.0.value": {
+      "literal": {
+        "identifier": "P_SoldGoods_Direct",
+        "slice": [
+          {
+            "index": "p",
+            "type": "free",
+            "value": "p"
+          },
+          {
+            "index": "m",
+            "type": "free",
+            "value": "m"
+          }
+        ]
+      }
+    },
+    "arcs.0.width.dynamic": {
+      "literal": true
+    },
+    "center.latitude": {
+      "literal": -7.274951516465888
+    },
+    "center.longitude": {
+      "literal": 111.41674764454364
+    },
+    "heatmaps.__display_order__": {
+      "literal": [
+        "heatmaps.0"
+      ]
+    },
+    "name": {
+      "literal": "map"
+    },
+    "nodes.__display_order__": {
+      "literal": [
+        "nodes.0"
+      ]
+    },
+    "nodes.0": {
+      "aimms": {
+        "contents": [
+          "P_Longitude",
+          "P_Latitude"
+        ],
+        "slices": [
+          {
+            "identifier": "P_Longitude",
+            "slice": [
+              {
+                "index": "l",
+                "type": "free",
+                "value": "l"
+              }
+            ]
+          },
+          {
+            "identifier": "P_Latitude",
+            "slice": [
+              {
+                "index": "l",
+                "type": "free",
+                "value": "l"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "nodes.0.index": {
+      "literal": {
+        "identifier": "l"
+      }
+    },
+    "nodes.0.latitude": {
+      "literal": {
+        "identifier": "P_Latitude",
+        "slice": [
+          {
+            "index": "l",
+            "type": "free",
+            "value": "l"
+          }
+        ]
+      }
+    },
+    "nodes.0.longitude": {
+      "literal": {
+        "identifier": "P_Longitude",
+        "slice": [
+          {
+            "index": "l",
+            "type": "free",
+            "value": "l"
+          }
+        ]
+      }
+    },
+    "title": {
+      "literal": "Results"
+    },
+    "zoom": {
+      "literal": 7
+    }
+  },
+  "widgets/map_1": {
+    "aimms.widget.type": {
+      "literal": "map-v2"
+    },
+    "name": {
+      "literal": "map (1)"
+    }
+  }
+}

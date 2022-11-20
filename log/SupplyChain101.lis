@@ -1,0 +1,141 @@
+
+
+This is the third solution report of Minimum_Total_Cost_Direct after a solve.
+
+The 1 scalar variable:
+Name      Lower      Level      Upper  Status
+--------  -----  ---------  ---------  ------
+V_Profit   -inf  46861.000        inf   
+
+The variable "V_SoldGoods(p,m)" contains the following 24 columns:
+       p           m  Lower  Level  Upper  Status
+--------  ----------  -----  -----  -----  ------
+Cikarang  Jakarta         0    600  2147483647   
+Cikarang  Bandung         0    400  2147483647   
+Cikarang  Yogyakarta      0      0  2147483647  At bound
+Cikarang  Semarang        0      0  2147483647  At bound
+Cikarang  Surabaya        0      0  2147483647  At bound
+Cikarang  Banyuwangi      0      0  2147483647  At bound
+Cikarang  Cirebon         0      0  2147483647  At bound
+Cikarang  Malang          0      0  2147483647  At bound
+Sidoarjo  Jakarta         0      0  2147483647  At bound
+Sidoarjo  Bandung         0      0  2147483647  At bound
+Sidoarjo  Yogyakarta      0    100  2147483647   
+Sidoarjo  Semarang        0      0  2147483647  At bound
+Sidoarjo  Surabaya        0    500  2147483647   
+Sidoarjo  Banyuwangi      0    350  2147483647   
+Sidoarjo  Cirebon         0      0  2147483647  At bound
+Sidoarjo  Malang          0    250  2147483647   
+Jepara    Jakarta         0      0  2147483647  At bound
+Jepara    Bandung         0     50  2147483647   
+Jepara    Yogyakarta      0    400  2147483647   
+Jepara    Semarang        0    450  2147483647   
+Jepara    Surabaya        0      0  2147483647  At bound
+Jepara    Banyuwangi      0      0  2147483647  At bound
+Jepara    Cirebon         0    300  2147483647   
+Jepara    Malang          0      0  2147483647  At bound
+
+For none of the constraints in mathematical program "Minimum_Total_Cost_Direct" sensitivity properties have been selected.
+Therefore no solution information is available for these constraints.
+
+
+This is the third constraint listing of Minimum_Total_Cost_Direct.
+
+
+----  V_Profit_definition
+
+
+V_Profit_definition .. [ 3 | 1 | after ]
+
+    -   4.200 * V_SoldGoods(Cikarang,Jakarta   ) -  11.200 * V_SoldGoods(Cikarang,Bandung   ) 
+    -  52.100 * V_SoldGoods(Cikarang,Yogyakarta) -  40.300 * V_SoldGoods(Cikarang,Semarang  ) 
+    -  74.100 * V_SoldGoods(Cikarang,Surabaya  ) - 102.200 * V_SoldGoods(Cikarang,Banyuwangi) 
+    -  18.100 * V_SoldGoods(Cikarang,Cirebon   ) -  80.900 * V_SoldGoods(Cikarang,Malang    ) 
+    -  78.200 * V_SoldGoods(Sidoarjo,Jakarta   ) -  77.800 * V_SoldGoods(Sidoarjo,Bandung   ) 
+    -  32.400 * V_SoldGoods(Sidoarjo,Yogyakarta) -      35 * V_SoldGoods(Sidoarjo,Semarang  ) 
+    -   3.090 * V_SoldGoods(Sidoarjo,Surabaya  ) -  28.400 * V_SoldGoods(Sidoarjo,Banyuwangi) 
+    -  57.200 * V_SoldGoods(Sidoarjo,Cirebon   ) -   7.110 * V_SoldGoods(Sidoarjo,Malang    ) 
+    -  51.800 * V_SoldGoods(Jepara  ,Jakarta   ) -  51.400 * V_SoldGoods(Jepara  ,Bandung   ) 
+    -  20.100 * V_SoldGoods(Jepara  ,Yogyakarta) -   7.730 * V_SoldGoods(Jepara  ,Semarang  ) 
+    -  42.700 * V_SoldGoods(Jepara  ,Surabaya  ) -  70.200 * V_SoldGoods(Jepara  ,Banyuwangi) 
+    -  30.900 * V_SoldGoods(Jepara  ,Cirebon   ) -  48.900 * V_SoldGoods(Jepara  ,Malang    ) 
+
+    + 1 * V_Profit = 0 ; (lhs=0)
+
+
+
+----  C_Plant_Limit
+
+
+C_Plant_Limit(Cikarang) .. [ 3 | 2 | after ]
+
+    + 1 * V_SoldGoods(Cikarang,Jakarta   ) + 1 * V_SoldGoods(Cikarang,Bandung   ) + 1 * V_SoldGoods(Cikarang,Yogyakarta) 
+    + 1 * V_SoldGoods(Cikarang,Semarang  ) + 1 * V_SoldGoods(Cikarang,Surabaya  ) + 1 * V_SoldGoods(Cikarang,Banyuwangi) 
+    + 1 * V_SoldGoods(Cikarang,Cirebon   ) + 1 * V_SoldGoods(Cikarang,Malang    ) <= 1000 ; (lhs=1000)
+
+
+C_Plant_Limit(Sidoarjo) .. [ 3 | 3 | after ]
+
+    + 1 * V_SoldGoods(Sidoarjo,Jakarta   ) + 1 * V_SoldGoods(Sidoarjo,Bandung   ) + 1 * V_SoldGoods(Sidoarjo,Yogyakarta) 
+    + 1 * V_SoldGoods(Sidoarjo,Semarang  ) + 1 * V_SoldGoods(Sidoarjo,Surabaya  ) + 1 * V_SoldGoods(Sidoarjo,Banyuwangi) 
+    + 1 * V_SoldGoods(Sidoarjo,Cirebon   ) + 1 * V_SoldGoods(Sidoarjo,Malang    ) <= 1300 ; (lhs=1200)
+
+
+C_Plant_Limit(Jepara) .. [ 3 | 4 | after ]
+
+    + 1 * V_SoldGoods(Jepara  ,Jakarta   ) + 1 * V_SoldGoods(Jepara  ,Bandung   ) + 1 * V_SoldGoods(Jepara  ,Yogyakarta) 
+    + 1 * V_SoldGoods(Jepara  ,Semarang  ) + 1 * V_SoldGoods(Jepara  ,Surabaya  ) + 1 * V_SoldGoods(Jepara  ,Banyuwangi) 
+    + 1 * V_SoldGoods(Jepara  ,Cirebon   ) + 1 * V_SoldGoods(Jepara  ,Malang    ) <= 1200 ; (lhs=1200)
+
+
+
+----  C_Market_Demand
+
+
+C_Market_Demand(Jakarta) .. [ 3 | 5 | after ]
+
+    + 1 * V_SoldGoods(Cikarang,Jakarta) + 1 * V_SoldGoods(Sidoarjo,Jakarta) + 1 * V_SoldGoods(Jepara,Jakarta) >= 600 ; (lhs=600)
+
+
+C_Market_Demand(Bandung) .. [ 3 | 6 | after ]
+
+    + 1 * V_SoldGoods(Cikarang,Bandung) + 1 * V_SoldGoods(Sidoarjo,Bandung) + 1 * V_SoldGoods(Jepara,Bandung) >= 450 ; (lhs=450)
+
+
+C_Market_Demand(Yogyakarta) .. [ 3 | 7 | after ]
+
+    + 1 * V_SoldGoods(Cikarang,Yogyakarta) + 1 * V_SoldGoods(Sidoarjo,Yogyakarta) + 1 * V_SoldGoods(Jepara,Yogyakarta) >= 500 ; (lhs=500)
+
+
+C_Market_Demand(Semarang) .. [ 3 | 8 | after ]
+
+    + 1 * V_SoldGoods(Cikarang,Semarang) + 1 * V_SoldGoods(Sidoarjo,Semarang) + 1 * V_SoldGoods(Jepara,Semarang) >= 450 ; (lhs=450)
+
+
+C_Market_Demand(Surabaya) .. [ 3 | 9 | after ]
+
+    + 1 * V_SoldGoods(Cikarang,Surabaya) + 1 * V_SoldGoods(Sidoarjo,Surabaya) + 1 * V_SoldGoods(Jepara,Surabaya) >= 500 ; (lhs=500)
+
+
+C_Market_Demand(Banyuwangi) .. [ 3 | 10 | after ]
+
+    + 1 * V_SoldGoods(Cikarang,Banyuwangi) + 1 * V_SoldGoods(Sidoarjo,Banyuwangi) + 1 * V_SoldGoods(Jepara,Banyuwangi) >= 350 ; (lhs=350)
+
+
+C_Market_Demand(Cirebon) .. [ 3 | 11 | after ]
+
+    + 1 * V_SoldGoods(Cikarang,Cirebon) + 1 * V_SoldGoods(Sidoarjo,Cirebon) + 1 * V_SoldGoods(Jepara,Cirebon) >= 300 ; (lhs=300)
+
+
+C_Market_Demand(Malang) .. [ 3 | 12 | after ]
+
+    + 1 * V_SoldGoods(Cikarang,Malang) + 1 * V_SoldGoods(Sidoarjo,Malang) + 1 * V_SoldGoods(Jepara,Malang) >= 250 ; (lhs=250)
+
+These are the third model statistics of Minimum_Total_Cost_Direct.
+
+                   Symbolic   Individual
+    Constraints        3           12      (0 infeasible)
+    Variables          2           25      (0 frozen)
+    Elements           6           73
+
+
